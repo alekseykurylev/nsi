@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Okpd2 {
+  id         Int     @id @default(autoincrement())
+  code       String  @unique
+  parentCode String?
+  name       String
+  actual     Boolean @default(true)
+}
