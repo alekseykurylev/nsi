@@ -6,7 +6,9 @@ export default async function Page() {
   return (
     <ul>
       {roots.map((item) => (
-        <li key={item.id}>{item.name}</li>
+        <li key={item.id}>
+          [{item.code}] {item.name}
+        </li>
       ))}
     </ul>
   );
