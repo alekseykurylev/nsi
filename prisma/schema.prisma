@@ -14,4 +14,6 @@ model Okpd2 {
   parentCode String?
   name       String
   actual     Boolean @default(true)
+
+  @@map("okpd2")
 }
