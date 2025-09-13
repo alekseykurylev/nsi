@@ -1,7 +1,7 @@
 import axios from "axios";
-import unzipper from "unzipper";
-import { XMLParser } from "fast-xml-parser";
 import { randomUUID } from "crypto";
+import { XMLParser } from "fast-xml-parser";
+import unzipper from "unzipper";
 import { PrismaClient } from "../src/generated/prisma";
 
 const prisma = new PrismaClient();

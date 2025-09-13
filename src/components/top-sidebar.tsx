@@ -1,0 +1,16 @@
+import { Menu } from "lucide-react";
+import type { ReactNode } from "react";
+
+export function TopSidebar({ children }: { children: ReactNode }) {
+  return (
+    <div className="p-4 flex items-center gap-4 border-b border-gray-200">
+      <button
+        className="cursor-pointer rounded-full p-2 hover:bg-gray-100"
+        type="button"
+      >
+        <Menu size={20} />
+      </button>
+      <div className="flex-1">{children}</div>
+    </div>
+  );
+}
