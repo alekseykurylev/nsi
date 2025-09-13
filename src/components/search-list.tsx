@@ -1,13 +1,8 @@
 import Link from "next/link";
 import { searchOKPD2 } from "@/lib/data";
 
-export async function SearchList({
-  searchParams,
-}: {
-  searchParams: Promise<{ query?: string }>;
-}) {
-  const query = (await searchParams).query;
-  const list = await searchOKPD2(query ?? "");
+export async function SearchList({ query }: { query: string }) {
+  const list = await searchOKPD2(query);
 
   if (!query) {
     return <div>Введите запрос</div>;

@@ -5,11 +5,13 @@ import { Search } from "@/components/search";
 import { SearchList } from "@/components/search-list";
 import { TopSidebar } from "@/components/top-sidebar";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ query?: string }>;
+export default async function Page(props: {
+  searchParams?: Promise<{
+    query?: string;
+  }>;
 }) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || "";
   return (
     <div>
       <TopSidebar>
@@ -24,8 +26,8 @@ export default async function Page({
           </BackLink>
         </div>
       </TopSidebar>
-      <Suspense fallback="loading...">
-        <SearchList searchParams={searchParams} />
+      <Suspense key={query} fallback="loading...">
+        <SearchList query={query} />
       </Suspense>
     </div>
   );
