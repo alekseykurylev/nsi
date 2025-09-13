@@ -65,6 +65,12 @@ async function downloadAndParseXml(url: string) {
       const parser = new XMLParser({
         ignoreAttributes: false,
         removeNSPrefix: true,
+        tagValueProcessor: (tagName, tagValue) => {
+          if (tagName === "code" || tagName === "parentCode") {
+            return null;
+          }
+          return tagValue;
+        },
       });
 
       const parsed = parser.parse(content.toString());
@@ -84,7 +90,7 @@ async function saveToDatabase(records: any[]) {
   await prisma.okpd2.deleteMany();
 
   const uniqueRecords = Array.from(
-    new Map(records.map((r) => [String(r.code), r])).values(),
+    new Map(records.map((r) => [Number(r.id), r])).values(),
   );
 
   console.log(`Сохраняем ${uniqueRecords.length} уникальных записей...`);
