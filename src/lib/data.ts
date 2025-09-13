@@ -31,3 +31,20 @@ export const fetchOKPD2ById = cache(async (id: number) => {
 
   return { ...item, children };
 });
+
+export const searchOKPD2 = cache(async (query: string, limit = 10) => {
+  if (!query.trim()) {
+    return [];
+  }
+
+  return prisma.okpd2.findMany({
+    where: {
+      OR: [
+        { name: { contains: query, mode: "insensitive" } },
+        { code: { contains: query, mode: "insensitive" } },
+      ],
+    },
+    orderBy: { code: "asc" },
+    take: limit,
+  });
+});
