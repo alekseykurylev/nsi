@@ -1,15 +1,11 @@
-import { fetchOKPD2Roots } from "@/lib/data";
+import Link from "next/link";
 
-export default async function Page() {
-  const roots = await fetchOKPD2Roots();
-
+export default function Page() {
   return (
     <ul>
-      {roots.map((item) => (
-        <li key={item.id}>
-          [{item.code}] {item.name}
-        </li>
-      ))}
+      <li>
+        <Link href="/okpd2">OKPD2</Link>
+      </li>
     </ul>
   );
 }

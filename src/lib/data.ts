@@ -9,3 +9,15 @@ export const fetchOKPD2Roots = cache(async () => {
     orderBy: { code: "asc" },
   });
 });
+
+export const fetchOKPD2ById = cache(async (id: number) => {
+  const item = await prisma.okpd2.findUnique({
+    where: { id },
+  });
+
+  if (!item) {
+    throw new Error(`OKPD2 element with code ${id} not found`);
+  }
+
+  return item;
+});
