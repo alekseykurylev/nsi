@@ -29,7 +29,6 @@ export function Search() {
       ref={inputRef}
       id="search"
       name="query"
-      inputMode="search"
       className="w-full bg-transparent py-1 focus:outline-hidden"
       placeholder="Поиск..."
       defaultValue={searchParams.get("query")?.toString()}
