@@ -15,7 +15,6 @@ export function Search() {
     } else {
       params.delete("query");
     }
-    console.log(pathname);
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 
