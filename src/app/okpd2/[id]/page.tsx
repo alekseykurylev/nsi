@@ -14,7 +14,18 @@ export default async function Page({
       <Link href={item.parentId ? `/okpd2/${item.parentId}` : `/okpd2`}>
         Назад
       </Link>
-      <div>{item.name}</div>
+      <div className="font-bold">
+        {item.code} {item.name}
+      </div>
+      <ul>
+        {item.children.map((i) => (
+          <li key={i.id}>
+            <Link href={`/okpd2/${i.id}`}>
+              {i.code} {i.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
