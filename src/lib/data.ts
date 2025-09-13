@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { fullTextSearchOKPD2 } from "@/generated/prisma/sql";
 import prisma from "@/lib/prisma";
 
 export const fetchOKPD2Roots = cache(async () => {
@@ -36,15 +37,5 @@ export const searchOKPD2 = cache(async (query: string, limit = 10) => {
   if (!query.trim()) {
     return [];
   }
-
-  return prisma.okpd2.findMany({
-    where: {
-      OR: [
-        { name: { contains: query, mode: "insensitive" } },
-        { code: { contains: query, mode: "insensitive" } },
-      ],
-    },
-    orderBy: { code: "asc" },
-    take: limit,
-  });
+  return prisma.$queryRawTyped(fullTextSearchOKPD2(query, limit));
 });

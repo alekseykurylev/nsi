@@ -24,7 +24,7 @@ export default async function Page({
           </BackLink>
         </div>
       </TopSidebar>
-      <Suspense>
+      <Suspense fallback="loading...">
         <SearchList searchParams={searchParams} />
       </Suspense>
     </div>
