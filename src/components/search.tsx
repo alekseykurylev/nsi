@@ -21,13 +21,7 @@ export function Search() {
   }, 300);
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.setSelectionRange(
-        inputRef.current.value.length,
-        inputRef.current.value.length,
-      );
-    }
+    inputRef.current?.focus();
   }, []);
 
   return (
@@ -35,6 +29,7 @@ export function Search() {
       ref={inputRef}
       id="search"
       name="query"
+      inputMode="search"
       className="w-full bg-transparent py-1 focus:outline-hidden"
       placeholder="Поиск..."
       defaultValue={searchParams.get("query")?.toString()}
