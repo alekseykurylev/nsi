@@ -9,6 +9,14 @@ export async function SearchList({
   const query = (await searchParams).query;
   const list = await searchOKPD2(query ?? "");
 
+  if (!query) {
+    return <div>Введите запрос</div>;
+  }
+
+  if (list.length === 0) {
+    return <div>Ничего не нашлось</div>;
+  }
+
   return (
     <ul>
       {list.map((item) => (
