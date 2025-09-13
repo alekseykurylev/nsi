@@ -27,7 +27,7 @@ export function Search() {
   return (
     <input
       ref={inputRef}
-      className="w-full bg-transparent py-2 focus:outline-hidden"
+      className="w-full bg-transparent py-1 focus:outline-hidden"
       placeholder="Поиск..."
       defaultValue={searchParams.get("query")?.toString()}
       onChange={(e) => {
