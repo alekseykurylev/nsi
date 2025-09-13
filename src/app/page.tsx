@@ -4,7 +4,9 @@ export default function Page() {
   return (
     <ul>
       <li>
-        <Link href="/okpd2">OKPD2</Link>
+        <Link className="text-xl font-semibold p-4 block" href="/okpd2">
+          ОКПД 2
+        </Link>
       </li>
     </ul>
   );
