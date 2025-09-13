@@ -83,7 +83,6 @@ async function saveToDatabase(records: any[]) {
   console.log(`Очистка таблицы okpd2...`);
   await prisma.okpd2.deleteMany();
 
-  // Удаляем дубликаты по code
   const uniqueRecords = Array.from(
     new Map(records.map((r) => [String(r.code), r])).values(),
   );
@@ -92,12 +91,14 @@ async function saveToDatabase(records: any[]) {
 
   await prisma.okpd2.createMany({
     data: uniqueRecords.map((r) => ({
+      id: Number(r.id),
+      parentId: r.parentId ? Number(r.parentId) : null,
       code: String(r.code),
       parentCode: r.parentCode ? String(r.parentCode) : null,
       name: String(r.name),
       actual: r.actual === "true" || r.actual === true,
     })),
-    skipDuplicates: true, // дополнительная защита
+    skipDuplicates: true,
   });
 }
 

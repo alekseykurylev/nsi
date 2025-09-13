@@ -9,11 +9,12 @@ datasource db {
 }
 
 model Okpd2 {
-  id         Int     @id @default(autoincrement())
-  code       String  @unique
+  id         Int     @id
+  parentId   Int?
+  code       String
   parentCode String?
   name       String
-  actual     Boolean @default(true)
+  actual     Boolean
 
   @@map("okpd2")
 }
