@@ -15,7 +15,9 @@ export default async function Page({
       <TopSidebar>
         <div className="flex items-center gap-4">
           <div className="w-full">
-            <Search />
+            <Suspense fallback="loading...">
+              <Search />
+            </Suspense>
           </div>
           <BackLink className="cursor-pointer rounded-full p-2 hover:bg-gray-100">
             <X size={20} />
