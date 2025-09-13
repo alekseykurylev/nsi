@@ -21,12 +21,19 @@ export function Search() {
   }, 300);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    if (inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.setSelectionRange(
+        inputRef.current.value.length,
+        inputRef.current.value.length,
+      );
+    }
   }, []);
 
   return (
     <input
       ref={inputRef}
+      id="search"
       name="query"
       className="w-full bg-transparent py-1 focus:outline-hidden"
       placeholder="Поиск..."
