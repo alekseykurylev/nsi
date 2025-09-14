@@ -33,11 +33,15 @@ export const fetchOKPD2ById = cache(async (id: number) => {
 });
 
 export async function searchOKPD2(query: string, limit = 10) {
+  if (!query.trim()) {
+    return [];
+  }
+
   return db
     .select()
     .from(okpd2)
     .where(
-      sql`${okpd2.name_search} @@ plainto_tsquery('russian', ${query})
+      sql`${okpd2.name_search} @@ to_tsquery('russian', ${query})
         OR ${okpd2.code} ILIKE ${`%${query}%`}`,
     )
     .limit(limit);
