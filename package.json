@@ -8,10 +8,10 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
+    "db:setup": "npx tsx src/lib/db/setup.ts",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "npx tsx src/lib/db/migrate.ts",
     "db:studio": "drizzle-kit studio",
-    "load-okpd2": "ts-node -P tsconfig.scripts.json scripts/load-okpd2.ts"
+    "load-okpd2": "ts-node -P tsconfig.scripts.json src/lib/db/setup.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.15.0",

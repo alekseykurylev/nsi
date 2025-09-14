@@ -5,7 +5,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { XMLParser } from "fast-xml-parser";
 import { Pool } from "pg";
 import unzipper from "unzipper";
-import { okpd2 } from "../src/lib/db/schema";
+import { okpd2 } from "./schema";
 
 dotenv.config();
 
@@ -146,4 +146,4 @@ async function main() {
   }
 }
 
-main();
+main().catch(console.error);
