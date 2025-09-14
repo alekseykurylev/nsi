@@ -9,7 +9,10 @@ export default async function Page() {
       <ul>
         {roots.map((item) => (
           <li key={item.id}>
-            <Link href={`/okpd2/${item.id}`}>
+            <Link
+              href={`/okpd2/${item.id}`}
+              className="flex cursor-pointer items-center border-b border-gray-100 p-4 hover:bg-gray-50"
+            >
               [{item.code}] {item.name}
             </Link>
           </li>
