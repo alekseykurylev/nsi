@@ -33,16 +33,32 @@ export const fetchOKPD2ById = cache(async (id: number) => {
 });
 
 export async function searchOKPD2(query: string, limit = 10) {
-  if (!query.trim()) {
-    return [];
-  }
+  if (!query.trim()) return [];
 
   return db
     .select()
     .from(okpd2)
     .where(
-      sql`${okpd2.name_search} @@ to_tsquery('russian', ${query})
+      sql`${okpd2.name_search} @@ websearch_to_tsquery('russian', ${query})
         OR ${okpd2.code} ILIKE ${`%${query}%`}`,
+    )
+    .limit(limit);
+}
+
+export async function autocompleteOKPD2(query: string, limit = 10) {
+  if (!query.trim()) return [];
+
+  const formatted = query
+    .split(/\s+/)
+    .map((w) => `${w}:*`)
+    .join(" & ");
+
+  return db
+    .select()
+    .from(okpd2)
+    .where(
+      sql`${okpd2.name_search} @@ to_tsquery('russian', ${formatted})
+            OR ${okpd2.code} ILIKE ${`%${query}%`}`,
     )
     .limit(limit);
 }
