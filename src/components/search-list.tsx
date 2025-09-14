@@ -5,17 +5,9 @@ import { highlightText } from "@/lib/utils";
 export async function SearchList({ query }: { query: string }) {
   const list = await autocompleteOKPD2(query);
 
-  if (!query) {
+  if (query && list.length === 0) {
     return (
-      <div className="flex justify-center border-b border-gray-100 p-4 ">
-        Введите запрос
-      </div>
-    );
-  }
-
-  if (list.length === 0) {
-    return (
-      <div className="flex justify-center border-b border-gray-100 p-4 ">
+      <div className="text-center border-b border-gray-100 p-4 text-gray-500">
         Ничего не нашлось
       </div>
     );

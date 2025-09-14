@@ -17,7 +17,7 @@ export default async function Page(props: {
       <TopSidebar>
         <div className="flex items-center gap-4">
           <div className="w-full">
-            <Suspense fallback="loading...">
+            <Suspense>
               <Search />
             </Suspense>
           </div>
@@ -26,7 +26,7 @@ export default async function Page(props: {
           </BackLink>
         </div>
       </TopSidebar>
-      <Suspense key={query} fallback="loading...">
+      <Suspense key={query}>
         <SearchList query={query} />
       </Suspense>
     </div>
