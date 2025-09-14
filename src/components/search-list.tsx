@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { autocompleteOKPD2 } from "@/lib/db/queries";
+import { searchOKPD2 } from "@/lib/db/queries";
 import { highlightText } from "@/lib/utils";
 
 export async function SearchList({ query }: { query: string }) {
-  const list = await autocompleteOKPD2(query);
+  const list = await searchOKPD2(query);
 
   if (query && list.length === 0) {
     return (
