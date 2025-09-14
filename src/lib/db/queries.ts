@@ -1,4 +1,4 @@
-import { asc, eq, isNull, or, sql } from "drizzle-orm";
+import { asc, eq, ilike, isNull, or, sql } from "drizzle-orm";
 import { cache } from "react";
 import { db } from "@/lib/db/index";
 import { okpd2 } from "@/lib/db/schema";
@@ -42,6 +42,16 @@ export async function searchOKPD2(query: string, limit = 10) {
       sql`${okpd2.name_search} @@ websearch_to_tsquery('russian', ${query})
         OR ${okpd2.code} ILIKE ${`%${query}%`}`,
     )
+    .limit(limit);
+}
+
+export async function searchILikeOKPD2(query: string, limit = 10) {
+  if (!query.trim()) return [];
+
+  return db
+    .select()
+    .from(okpd2)
+    .where(or(ilike(okpd2.name, `%${query}%`), ilike(okpd2.code, `%${query}%`)))
     .limit(limit);
 }
 

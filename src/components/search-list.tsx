@@ -21,7 +21,7 @@ export async function SearchList({ query }: { query: string }) {
             href={`/okpd2/${item.id}`}
             className="cursor-pointer border-b block border-gray-100 p-4 hover:bg-gray-50"
           >
-            <span>[{item.code}]</span>{" "}
+            <span>[{highlightText(item.code, query)}]</span>{" "}
             <span>{highlightText(item.name, query)}</span>
           </Link>
         </li>
