@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchOKPD2Roots } from "@/lib/data";
+import { fetchOKPD2Roots } from "@/lib/db/queries";
 
 export default async function Page() {
   const roots = await fetchOKPD2Roots();

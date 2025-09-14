@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { searchOKPD2 } from "@/lib/data";
+import { searchOKPD2 } from "@/lib/db/queries";
 
 export async function SearchList({ query }: { query: string }) {
   const list = await searchOKPD2(query);

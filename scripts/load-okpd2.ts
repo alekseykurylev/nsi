@@ -1,10 +1,18 @@
 import axios from "axios";
 import { randomUUID } from "crypto";
+import dotenv from "dotenv";
+import { drizzle } from "drizzle-orm/node-postgres";
 import { XMLParser } from "fast-xml-parser";
+import { Pool } from "pg";
 import unzipper from "unzipper";
-import { PrismaClient } from "../src/generated/prisma";
+import { okpd2 } from "../src/lib/db/schema";
 
-const prisma = new PrismaClient();
+dotenv.config();
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+const db = drizzle(pool);
 
 const SOAP_ENDPOINT = process.env.EIS_SOAP_ENDPOINT!;
 const EIS_TOKEN = process.env.EIS_PERSON_TOKEN!;
@@ -37,7 +45,6 @@ async function fetchOKPD2Archives(): Promise<string[]> {
     timeout: 60_000,
   });
 
-  // Находим все archiveUrl в ответе
   const urls: string[] = [];
   for (const m of (data as string).matchAll(
     /<archiveUrl>(.*?)<\/archiveUrl>/g,
@@ -74,7 +81,6 @@ async function downloadAndParseXml(url: string) {
       });
 
       const parsed = parser.parse(content.toString());
-
       const list = parsed.export?.nsiOKPD2List?.nsiOKPD2 ?? [];
       return Array.isArray(list) ? list : [list];
     } else {
@@ -87,7 +93,7 @@ async function downloadAndParseXml(url: string) {
 
 async function saveToDatabase(records: any[]) {
   console.log(`Очистка таблицы okpd2...`);
-  await prisma.okpd2.deleteMany();
+  await db.delete(okpd2);
 
   const uniqueRecords = Array.from(
     new Map(records.map((r) => [Number(r.id), r])).values(),
@@ -95,17 +101,23 @@ async function saveToDatabase(records: any[]) {
 
   console.log(`Сохраняем ${uniqueRecords.length} уникальных записей...`);
 
-  await prisma.okpd2.createMany({
-    data: uniqueRecords.map((r) => ({
-      id: Number(r.id),
-      parentId: r.parentId ? Number(r.parentId) : null,
-      code: String(r.code),
-      parentCode: r.parentCode ? String(r.parentCode) : null,
-      name: String(r.name),
-      actual: r.actual === "true" || r.actual === true,
-    })),
-    skipDuplicates: true,
-  });
+  const chunkSize = 1000;
+  for (let i = 0; i < uniqueRecords.length; i += chunkSize) {
+    const chunk = uniqueRecords.slice(i, i + chunkSize);
+    await db
+      .insert(okpd2)
+      .values(
+        chunk.map((r) => ({
+          id: Number(r.id),
+          parentId: r.parentId ? Number(r.parentId) : null,
+          code: String(r.code),
+          parentCode: r.parentCode ? String(r.parentCode) : null,
+          name: String(r.name),
+          actual: r.actual === "true" || r.actual === true,
+        })),
+      )
+      .onConflictDoNothing();
+  }
 }
 
 async function main() {
@@ -130,7 +142,7 @@ async function main() {
   } catch (err) {
     console.error("Ошибка загрузки:", err);
   } finally {
-    await prisma.$disconnect();
+    await pool.end();
   }
 }
 
