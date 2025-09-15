@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchOKPD2ById } from "@/lib/db//queries";
+import { fetchOKPD2ById } from "@/lib/db/queries";
 
 export default async function Page({
   params,
