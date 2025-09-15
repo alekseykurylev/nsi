@@ -39,36 +39,11 @@ export async function searchOKPD2(query: string, limit = 10) {
     .select()
     .from(okpd2)
     .where(
-      sql`${okpd2.name_search} @@ websearch_to_tsquery('russian', ${query})
-        OR ${okpd2.code} ILIKE ${`%${query}%`}`,
-    )
-    .limit(limit);
-}
-
-export async function searchILikeOKPD2(query: string, limit = 10) {
-  if (!query.trim()) return [];
-
-  return db
-    .select()
-    .from(okpd2)
-    .where(or(ilike(okpd2.name, `%${query}%`), ilike(okpd2.code, `%${query}%`)))
-    .limit(limit);
-}
-
-export async function autocompleteOKPD2(query: string, limit = 10) {
-  if (!query.trim()) return [];
-
-  const formatted = query
-    .split(/\s+/)
-    .map((w) => `${w}:*`)
-    .join(" & ");
-
-  return db
-    .select()
-    .from(okpd2)
-    .where(
-      sql`${okpd2.name_search} @@ to_tsquery('russian', ${formatted})
-            OR ${okpd2.code} ILIKE ${`%${query}%`}`,
+      or(
+        sql`${okpd2.name_search} @@ websearch_to_tsquery('russian', ${query})`,
+        ilike(okpd2.name, `%${query}%`),
+        ilike(okpd2.code, `%${query}%`),
+      ),
     )
     .limit(limit);
 }
