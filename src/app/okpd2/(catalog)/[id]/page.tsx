@@ -13,7 +13,7 @@ export default async function Page({
     <div>
       <Link
         href={item.parentId ? `/okpd2/${item.parentId}` : `/okpd2`}
-        className="flex cursor-pointer items-center border-b border-gray-100 p-4 hover:bg-gray-50"
+        className="flex cursor-pointer items-center border-b bg-gray-100 border-gray-100 p-4 hover:bg-gray-200"
       >
         Назад
       </Link>

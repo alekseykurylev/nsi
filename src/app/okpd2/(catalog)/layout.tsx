@@ -1,6 +1,13 @@
 import { Search } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { TopSidebar } from "@/components/top-sidebar";
+
+export const metadata: Metadata = {
+  title: "Классификатор ОКПД 2",
+  description:
+    "ОКПД — Общероссийский классификатор продукции по видам экономической деятельности.",
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
