@@ -29,7 +29,7 @@ export function SearchModal({ children }: { children: ReactNode }) {
       </DialogTrigger>
       <DialogPopup
         showCloseButton={false}
-        className="rounded-none max-w-screen sm:max-w-screen h-screen p-0 gap-0 grid-rows-[auto_1fr]"
+        className="rounded-none max-w-screen sm:max-w-screen h-dvh p-0 gap-0 grid-rows-[auto_1fr]"
       >
         <div className="p-4 flex items-center gap-4 border-b border-gray-200">
           <Input
