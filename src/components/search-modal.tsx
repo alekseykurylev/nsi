@@ -4,6 +4,7 @@ import Link from "next/link";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { Dialog, DialogPopup, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { useOkd2Search } from "@/lib/hooks/use-okpd2-search";
 import { highlightText } from "@/lib/utils";
 
@@ -26,10 +27,9 @@ export function SearchModal({ children }: { children: ReactNode }) {
         {children}
       </DialogTrigger>
       <DialogPopup showCloseButton>
-        <input
+        <Input
           ref={inputRef}
           name="query"
-          className="w-full bg-transparent py-1 focus:outline-hidden"
           placeholder="Поиск..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
