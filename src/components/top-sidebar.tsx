@@ -4,7 +4,7 @@ import { SearchModal } from "@/components/search-modal";
 
 export function TopSidebar({ children }: { children: ReactNode }) {
   return (
-    <div className="p-4 flex items-center gap-4 border-b border-gray-200">
+    <header className="bg-background sticky top-0 z-50 w-full p-4 flex items-center gap-4 border-b border-gray-200">
       <button
         className="cursor-pointer rounded-full p-2 hover:bg-gray-100"
         type="button"
@@ -15,6 +15,6 @@ export function TopSidebar({ children }: { children: ReactNode }) {
       <SearchModal>
         <Search size={20} />
       </SearchModal>
-    </div>
+    </header>
   );
 }

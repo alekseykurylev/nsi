@@ -19,8 +19,8 @@ export default function RootLayout({
       lang="ru"
       className={`bg-white text-gray-800 ${inter.className} antialiased`}
     >
-      <body className="flex h-screen">
-        <main className="grow overflow-hidden">{children}</main>
+      <body className="text-foreground overscroll-none font-sans antialiased">
+        {children}
       </body>
     </html>
   );
