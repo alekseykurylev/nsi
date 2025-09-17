@@ -2,8 +2,8 @@ import { Menu, Search } from "lucide-react";
 import type { ReactNode } from "react";
 import {
   Dialog,
-  DialogContent,
   DialogDescription,
+  DialogPopup,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -22,10 +22,10 @@ export function TopSidebar({ children }: { children: ReactNode }) {
         <DialogTrigger className="cursor-pointer rounded-full p-2 hover:bg-gray-100">
           <Search size={20} />
         </DialogTrigger>
-        <DialogContent showCloseButton>
+        <DialogPopup showCloseButton>
           <DialogTitle>DialogTitle</DialogTitle>
           <DialogDescription>DialogDescription</DialogDescription>
-        </DialogContent>
+        </DialogPopup>
       </Dialog>
     </div>
   );

@@ -14,9 +14,8 @@
     "load-okpd2": "ts-node -P tsconfig.scripts.json src/lib/db/setup.ts"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.15",
+    "@base-ui-components/react": "1.0.0-beta.3",
     "axios": "^1.11.0",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.5",
