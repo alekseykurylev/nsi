@@ -9,6 +9,7 @@ import { highlightText } from "@/lib/utils";
 
 export function SearchModal({ children }: { children: ReactNode }) {
   const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
   const [debouncedQuery] = useDebounce(query, 300);
 
   const { data, isLoading } = useOkd2Search(debouncedQuery);
@@ -20,7 +21,7 @@ export function SearchModal({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="cursor-pointer rounded-full p-2 hover:bg-gray-100">
         {children}
       </DialogTrigger>
@@ -43,6 +44,7 @@ export function SearchModal({ children }: { children: ReactNode }) {
                 <Link
                   href={`/okpd2/${item.id}`}
                   className="cursor-pointer border-b block border-gray-100 p-4 hover:bg-gray-50"
+                  onClick={() => setOpen(false)}
                 >
                   <span>[{highlightText(item.code, debouncedQuery)}]</span>{" "}
                   <span>{highlightText(item.name, debouncedQuery)}</span>
