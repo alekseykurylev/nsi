@@ -37,10 +37,7 @@ function DialogBackdrop({
   return (
     <DialogPrimitive.Backdrop
       data-slot="dialog-backdrop"
-      className={cn(
-        "data-starting-style:opacity-0 data-ending-style:opacity-0 opacity-80 transition-opacity fixed inset-0 z-50 bg-black/50",
-        className,
-      )}
+      className={cn("fixed inset-0 z-50 bg-black/50", className)}
       {...props}
     />
   );
@@ -60,7 +57,7 @@ function DialogPopup({
       <DialogPrimitive.Popup
         data-slot="dialog-popup"
         className={cn(
-          "bg-background transition-all data-starting-style:opacity-0 data-ending-style:opacity-0 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg",
+          "bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg",
           className,
         )}
         {...props}
