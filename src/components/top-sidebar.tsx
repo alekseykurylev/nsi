@@ -1,12 +1,6 @@
 import { Menu, Search } from "lucide-react";
 import type { ReactNode } from "react";
-import {
-  Dialog,
-  DialogDescription,
-  DialogPopup,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { SearchModal } from "@/components/search-modal";
 
 export function TopSidebar({ children }: { children: ReactNode }) {
   return (
@@ -18,15 +12,9 @@ export function TopSidebar({ children }: { children: ReactNode }) {
         <Menu size={20} />
       </button>
       <div className="flex-1">{children}</div>
-      <Dialog>
-        <DialogTrigger className="cursor-pointer rounded-full p-2 hover:bg-gray-100">
-          <Search size={20} />
-        </DialogTrigger>
-        <DialogPopup showCloseButton>
-          <DialogTitle>DialogTitle</DialogTitle>
-          <DialogDescription>DialogDescription</DialogDescription>
-        </DialogPopup>
-      </Dialog>
+      <SearchModal>
+        <Search size={20} />
+      </SearchModal>
     </div>
   );
 }
