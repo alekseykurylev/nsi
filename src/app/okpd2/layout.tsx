@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <header className="fixed inset-x-0 top-0 z-10 p-4 flex items-center gap-4 border-b bg-white border-gray-200">
+    <div className="relative flex w-full flex-1 flex-col">
+      <header className="sticky top-0 shrink-0 p-4 flex items-center gap-4 border-b bg-white border-gray-200">
         <button
           className="cursor-pointer rounded-full p-2 hover:bg-gray-100"
           type="button"
@@ -28,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Search size={20} />
         </SearchModal>
       </header>
-      <main className="flex flex-1 flex-col pt-[69px]">{children}</main>
-    </>
+      <main className="flex flex-1 flex-col ">{children}</main>
+    </div>
   );
 }

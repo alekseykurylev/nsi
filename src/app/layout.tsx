@@ -16,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${inter.className} antialiased`}>
-      <body>{children}</body>
+      <body>
+        <div className="flex min-h-svh w-full">{children}</div>
+      </body>
     </html>
   );
 }
