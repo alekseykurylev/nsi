@@ -4,10 +4,10 @@ import { X } from "lucide-react";
 import Link from "next/link";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { Dialog, DialogPopup, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { useOkd2Search } from "@/lib/hooks/use-okpd2-search";
 import { highlightText } from "@/lib/utils";
+import { Dialog, DialogPopup, DialogTrigger } from "./ui/dialog";
+import { Input } from "./ui/input";
 
 export function SearchModal({ children }: { children: ReactNode }) {
   const [query, setQuery] = useState("");

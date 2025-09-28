@@ -1,6 +1,6 @@
 import { Menu, Search } from "lucide-react";
 import type { ReactNode } from "react";
-import { SearchModal } from "@/components/search-modal";
+import { SearchModal } from "./search-modal";
 
 export function TopSidebar({ children }: { children: ReactNode }) {
   return (

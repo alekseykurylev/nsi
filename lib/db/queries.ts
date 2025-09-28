@@ -1,7 +1,7 @@
 import { asc, eq, isNull, or } from "drizzle-orm";
 import { cache } from "react";
-import { db } from "@/lib/db/index";
-import { okpd2 } from "@/lib/db/schema";
+import { db } from "./index";
+import { okpd2 } from "./schema";
 
 export const fetchOKPD2Roots = cache(async () => {
   return db

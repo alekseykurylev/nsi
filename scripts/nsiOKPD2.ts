@@ -5,7 +5,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { XMLParser } from "fast-xml-parser";
 import { Pool } from "pg";
 import unzipper from "unzipper";
-import { okpd2 } from "./schema";
+import { okpd2 } from "../lib/db/schema";
 
 dotenv.config();
 
