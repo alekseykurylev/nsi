@@ -5,7 +5,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { XMLParser } from "fast-xml-parser";
 import { Pool } from "pg";
 import unzipper from "unzipper";
-import { okpd2 } from "../lib/db/schema/okpd2";
+import { okei } from "../lib/db/schema/okei";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ const db = drizzle(pool);
 const SOAP_ENDPOINT = process.env.EIS_SOAP_ENDPOINT!;
 const EIS_TOKEN = process.env.EIS_PERSON_TOKEN!;
 
-async function fetchOKPD2Archives(): Promise<string[]> {
+async function fetchOKEIArchives(): Promise<string[]> {
   const requestXml = `
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                       xmlns:ws="http://zakupki.gov.ru/fz44/get-docs-ip/ws">
@@ -32,7 +32,7 @@ async function fetchOKPD2Archives(): Promise<string[]> {
             <mode>PROD</mode>
           </index>
           <selectionParams>
-            <nsiCode44>nsiOKPD2</nsiCode44>
+            <nsiCode44>nsiOKEI</nsiCode44>
             <nsiKind>all</nsiKind>
           </selectionParams>
         </ws:getNsiRequest>
@@ -72,16 +72,10 @@ async function downloadAndParseXml(url: string) {
       const parser = new XMLParser({
         ignoreAttributes: false,
         removeNSPrefix: true,
-        tagValueProcessor: (tagName, tagValue) => {
-          if (tagName === "code" || tagName === "parentCode") {
-            return null;
-          }
-          return tagValue;
-        },
       });
 
       const parsed = parser.parse(content.toString());
-      const list = parsed.export?.nsiOKPD2List?.nsiOKPD2 ?? [];
+      const list = parsed.export?.nsiOKEIList?.nsiOKEI ?? [];
       return Array.isArray(list) ? list : [list];
     } else {
       entry.autodrain();
@@ -92,11 +86,11 @@ async function downloadAndParseXml(url: string) {
 }
 
 async function saveToDatabase(records: any[]) {
-  console.log(`Очистка таблицы okpd2...`);
-  await db.delete(okpd2);
+  console.log(`Очистка таблицы okei...`);
+  await db.delete(okei);
 
   const uniqueRecords = Array.from(
-    new Map(records.map((r) => [Number(r.id), r])).values(),
+    new Map(records.map((r) => [String(r.code), r])).values(),
   );
 
   console.log(`Сохраняем ${uniqueRecords.length} уникальных записей...`);
@@ -105,15 +99,23 @@ async function saveToDatabase(records: any[]) {
   for (let i = 0; i < uniqueRecords.length; i += chunkSize) {
     const chunk = uniqueRecords.slice(i, i + chunkSize);
     await db
-      .insert(okpd2)
+      .insert(okei)
       .values(
         chunk.map((r) => ({
-          id: Number(r.id),
-          parentId: r.parentId ? Number(r.parentId) : null,
           code: String(r.code),
-          parentCode: r.parentCode ? String(r.parentCode) : null,
-          name: String(r.name),
+          fullName: String(r.fullName ?? ""),
+          sectionCode: r.section?.code ?? null,
+          sectionName: r.section?.name ?? null,
+          groupId: r.group?.id ? Number(r.group.id) : null,
+          groupName: r.group?.name ?? null,
+          localName: r.localName ?? null,
+          internationalName: r.internationalName ?? null,
+          localSymbol: r.localSymbol ?? null,
+          internationalSymbol: r.internationalSymbol ?? null,
+          trueNationalCode: r.trueNationalCode ?? null,
           actual: r.actual === "true" || r.actual === true,
+          isTemporaryForKTRU:
+            r.isTemporaryForKTRU === "true" || r.isTemporaryForKTRU === true,
         })),
       )
       .onConflictDoNothing();
@@ -123,7 +125,7 @@ async function saveToDatabase(records: any[]) {
 async function main() {
   try {
     console.log("Запрашиваем список архивов...");
-    const urls = await fetchOKPD2Archives();
+    const urls = await fetchOKEIArchives();
     console.log("Получено ссылок:", urls.length);
 
     let allRecords: any[] = [];
@@ -138,7 +140,7 @@ async function main() {
     console.log("Всего записей:", allRecords.length);
     await saveToDatabase(allRecords);
 
-    console.log("Загрузка справочника ОКПД2 завершена ✅");
+    console.log("Загрузка справочника ОКЕИ завершена ✅");
   } catch (err) {
     console.error("Ошибка загрузки:", err);
   } finally {

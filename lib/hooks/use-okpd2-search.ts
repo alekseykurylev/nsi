@@ -1,6 +1,6 @@
 import type { InferSelectModel } from "drizzle-orm";
 import useSWR from "swr";
-import type { okpd2 } from "@/lib/db/schema";
+import type { okpd2 } from "@/lib/db/schema/okpd2";
 import { fetcher } from "@/lib/utils";
 
 export type OKPD2 = InferSelectModel<typeof okpd2>;

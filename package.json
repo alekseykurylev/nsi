@@ -8,10 +8,10 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "db:setup": "npx tsx setup/nsiOKPD2.ts",
-    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "load-okpd2": "ts-node -P tsconfig.scripts.json setup/nsiOKPD2.ts"
+    "load-okpd2": "ts-node -P tsconfig.scripts.json setup/nsiOKPD2.ts",
+    "load-okei": "ts-node -P tsconfig.scripts.json setup/nsiOKEI.ts"
   },
   "dependencies": {
     "@base-ui-components/react": "1.0.0-beta.3",
