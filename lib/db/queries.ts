@@ -1,5 +1,6 @@
 import { asc, eq, isNull, or } from "drizzle-orm";
 import { cache } from "react";
+import { okei } from "@/lib/db/schema/okei";
 import { db } from "./index";
 import { okpd2 } from "./schema/okpd2";
 
@@ -32,18 +33,6 @@ export const fetchOKPD2ById = cache(async (id: number) => {
   return { ...item, children };
 });
 
-// export async function searchOKPD2(query: string, limit = 10) {
-//   if (!query.trim()) return [];
-//
-//   return db
-//     .select()
-//     .from(okpd2)
-//     .where(
-//       or(
-//         sql`${okpd2.name_search} @@ websearch_to_tsquery('russian', ${query})`,
-//         ilike(okpd2.name, `%${query}%`),
-//         ilike(okpd2.code, `%${query}%`),
-//       ),
-//     )
-//     .limit(limit);
-// }
+export const fetchAllOKEI = cache(async () => {
+  return db.select().from(okei).orderBy(asc(okei.code));
+});

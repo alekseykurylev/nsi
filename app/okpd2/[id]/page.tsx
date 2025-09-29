@@ -11,12 +11,14 @@ export default async function Page({
 
   return (
     <div>
-      <Link
-        href={item.parentId ? `/okpd2/${item.parentId}` : `/okpd2`}
-        className="flex cursor-pointer items-center border-b bg-gray-100 border-gray-100 p-4 hover:bg-gray-200"
-      >
-        Назад
-      </Link>
+      <div className="flex gap-2">
+        <Link href="/okpd2">ОКПД 2</Link>
+        <span>/</span>
+        <Link href={item.parentId ? `/okpd2/${item.parentId}` : `/okpd2`}>
+          {item.parentId}
+        </Link>
+      </div>
+
       <div className="font-bold flex items-center border-b border-gray-100 p-4 ">
         [{item.code}] {item.name}
       </div>

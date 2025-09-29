@@ -8,6 +8,11 @@ export default function Page() {
           ОКПД 2
         </Link>
       </li>
+      <li>
+        <Link className="text-xl font-semibold p-4 block" href="/okei">
+          ОКЕИ
+        </Link>
+      </li>
     </ul>
   );
 }
